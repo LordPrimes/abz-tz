@@ -11,6 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'PagesController@index')->name('main');
+Route::get('reg', 'RegController@indexRegPages');
+Route::post('regaccount','RegController@reg')->name('reg');
