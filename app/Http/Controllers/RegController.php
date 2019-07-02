@@ -11,7 +11,6 @@ use App\Modules\Adapter\AuthAdapter;
 use Exception;
 
 
-
 class RegController extends Controller
 {
    

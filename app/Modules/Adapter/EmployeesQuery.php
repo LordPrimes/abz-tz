@@ -27,6 +27,11 @@ class EmployeesQuery implements EmployeesInterface
     {
         return $this->model->where('email' , $email)->get();
     }
+
+    public function find(string $data)
+    {
+        return $this->model->where('email', 'LIKE', "%$data%")->get();
+    }
 }
 
 ?>
