@@ -36,6 +36,12 @@
     </div>
 @endif
 </div>
+@if (Session::has('success'))
+   <div class="alert alert-info">{{ Session::get('success') }}</div>
+@endif
+@if (Session::has('error'))
+   <div class="alert alert-info">{{ Session::get('error') }}</div>
+@endif
 <script src="{{asset('js/app.js')}}"></script>
 </body>
 </html>

@@ -12,5 +12,5 @@
 */
 
 Route::get('/', 'PagesController@index')->name('main');
-Route::get('reg', 'RegController@indexRegPages');
+Route::get('reg', 'RegController@indexRegPages')->name('newaccount');
 Route::post('regaccount','RegController@reg')->name('reg');

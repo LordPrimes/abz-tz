@@ -28,7 +28,7 @@ class RegReposetory implements RegInterface
 
     public function logout()
     {
-
+        return 12345;
     }
 }
 
