@@ -17,3 +17,4 @@ Route::post('regaccount','RegController@reg')->name('reg');
 Route::get('/admin','AdminController@adminpages')->name('admin');
 Route::get('edit/{id}', 'AdminController@edit')->name('edit');
 Route::post('edits','AdminController@update')->name('update');
+Route::get('auth','AdminController@auth')->name('auth');

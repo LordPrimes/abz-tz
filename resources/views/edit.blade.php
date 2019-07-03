@@ -56,7 +56,8 @@
                     @endforeach
                 </ul>
             </div>
-        @endif          
+        @endif      
+        <img src='{{$result->photo}}' width="100" height="100">     
 <script src="{{asset('js/app.js')}}"></script>
 </body>
 </html>

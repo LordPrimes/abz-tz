@@ -9,55 +9,60 @@ use App\Model\Employees;
 use App\Http\Requests\UpdateRequest;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
+use App\Modules\Adapter\AuthAdapter;
 use Exception;
 
  class AdminController extends Controller
 {
     
     private $items;
+
+    private $auth;
     
     public function __construct(Employees $Employees)
     {
         $this->items = new EmployeesQuery($Employees);
+        $this->auth = new AuthAdapter($Employees);
     }
 
-    public function adminpages(Request $request){
+    public function adminpages(Request $request)
+    {
 
+        return dd($this->auth->guest());
+        // $result = $request->input('find');
+        // if($result == []){
+        //         try {
 
-        $result = $request->input('find');
-        if($result == []){
-                try {
+        //         $query = $this->items->all();
 
-                $query = $this->items->all();
+        //         $data = ['query' => $query];
 
-                $data = ['query' => $query];
-
-                return view('admin')->with($data);
-                }
-                    catch(Exception $e){
-                        return redirect()->route('admin')->with('error', 'в базе нету данных!');
-                    }
-        }else {
+        //         return view('admin')->with($data);
+        //         }
+        //             catch(Exception $e){
+        //                 return redirect()->route('admin')->with('error', 'в базе нету данных!');
+        //             }
+        // }else {
            
-            try {
+        //     try {
             
-               $query = $this->items->find($result);
-                if($query->isEmpty()){
+        //        $query = $this->items->find($result);
+        //         if($query->isEmpty()){
 
-                    return redirect()->route('admin')->with('error', 'В базе ничего нету!');
-                }else {
-                    $data = ['query' => $query]; 
-                    return view('admin')->with($data);
-                }
+        //             return redirect()->route('admin')->with('error', 'В базе ничего нету!');
+        //         }else {
+        //             $data = ['query' => $query]; 
+        //             return view('admin')->with($data);
+        //         }
         
-            }
-            catch(Exception $e){
-                return redirect()->route('admin')->with('error', 'Во время поиска произашла ошибка!Попробуйте еще раз!');
-            }
+        //     }
+        //     catch(Exception $e){
+        //         return redirect()->route('admin')->with('error', 'Во время поиска произашла ошибка!Попробуйте еще раз!');
+        //     }
 
 
            
-        }
+        // }
     
     }
 
@@ -82,13 +87,11 @@ use Exception;
 
     public function update(UpdateRequest $request)
     {
-        
- $imageName = time().'.'.$request->file('image')->getClientOriginalExtension();
+        try {
+        $imageName = time().'.'.$request->file('image')->getClientOriginalExtension();
 
-   $file = $request->file('image')->move(public_path('images'), $imageName);
-    
+        $file = $request->file('image')->move(public_path('images'), $imageName);
 
-        
         $data = [
             'nama' => $request->input('nama'),
             'email' => $request->input('email'),
@@ -96,13 +99,14 @@ use Exception;
             'salary' => $request->input('salary'),
             'photo' => $file
         ];
-        
-     $result = $this->items->update($request->input('id'), $data);
 
+        $result = $this->items->update($request->input('id'), $data);
 
+        return redirect()->route('edit',['id' =>$request->input('id')])->with('suscces', 'данные успешно изменены!');
 
-
-        // return redirect()->route('edit',['id' =>$request->input('id')]);
+        }catch(Exception $e){
+            return redirect()->route('edit',['id' =>$request->input('id')])->with('error', 'при изменение возникла ошибка!');
+        }
     }
 
 

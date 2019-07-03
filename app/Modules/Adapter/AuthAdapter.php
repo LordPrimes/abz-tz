@@ -5,6 +5,8 @@ namespace App\Modules\Adapter;
 use App\Modules\Adapter\EmployeesQuery;
 use App\Contract\AuthInterface;
 use App\Model\Employees;
+use Illuminate\Support\Facades\Auth;
+
 
 class AuthAdapter implements AuthInterface 
 {
@@ -29,7 +31,12 @@ class AuthAdapter implements AuthInterface
 
     public function guest()
     {
+        $cheked = Auth::check();
 
+        if($cheked == null)
+        {
+            return 123;
+        }
     }
 }
 
