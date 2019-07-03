@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Adapter\EmployeesQuery;
 use App\Model\Employees;
+use App\Http\Requests\UpdateRequest;
+use Illuminate\Http\File;
+use Illuminate\Support\Facades\Storage;
+use Exception;
 
  class AdminController extends Controller
 {
@@ -57,7 +61,49 @@ use App\Model\Employees;
     
     }
 
-  
+    public function edit($id)
+    {
+       try { 
+
+        $result = $this->items->items($id);
+
+       $data = ['result' => $result];
+
+       return view('edit')->with($data);
+
+    }catch(Exception $e){
+
+        return redirect()->route('admin')->with('error', 'при загрузке профиля возникла ошибка!');
+    } 
+      
+
+         
+    }
+
+    public function update(UpdateRequest $request)
+    {
+        
+ $imageName = time().'.'.$request->file('image')->getClientOriginalExtension();
+
+   $file = $request->file('image')->move(public_path('images'), $imageName);
+    
+
+        
+        $data = [
+            'nama' => $request->input('nama'),
+            'email' => $request->input('email'),
+            'phone' => $request->input('phone'),
+            'salary' => $request->input('salary'),
+            'photo' => $file
+        ];
+        
+     $result = $this->items->update($request->input('id'), $data);
+
+
+
+
+        // return redirect()->route('edit',['id' =>$request->input('id')]);
+    }
 
 
 }

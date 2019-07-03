@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Controller;
 
 
-class PagesController extends AdminController 
+class PagesController extends Controller
 {
     public function index()
     {

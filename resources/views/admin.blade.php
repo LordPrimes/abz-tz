@@ -21,7 +21,9 @@
         </form>
 
         @foreach ($query as $item)
-            {{$item->id}}
+            <li>{{$item->id}}. {{$item->email}}</li>    
+            <a href="{{route('edit',['id' => $item->id])}}" class="btn btn-primary">Редактировать</a>
+                
         @endforeach
         <div>
                

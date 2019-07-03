@@ -13,7 +13,9 @@ interface EmployeesInterface
 
     public function delet(string $id);
 
-    public function update(string $id);
+    public function update(string $id, array $data);
+
+    public function items($id);
 }
 
 ?>

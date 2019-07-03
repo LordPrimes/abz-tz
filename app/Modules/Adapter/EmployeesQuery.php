@@ -14,7 +14,6 @@ class EmployeesQuery implements EmployeesInterface
     {
         $this->model = $model;
 
-       
     }
     
     
@@ -31,6 +30,21 @@ class EmployeesQuery implements EmployeesInterface
     public function find(string $data)
     {
         return $this->model->where('email', 'LIKE', "%$data%")->get();
+    }
+
+    public function delet(string $id)
+    {
+
+    }
+
+    public function update(string $id, array $data)
+    {
+        return $this->model->where('id', $id)->update($data);
+    }
+
+    public function items($id)
+    {
+        return $this->model->findOrFail($id);
     }
 }
 
